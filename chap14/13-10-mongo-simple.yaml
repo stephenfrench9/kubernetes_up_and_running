@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: "mysql"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysqldb
+    spec:
+      containers:
+      - name: mongodb
+        image: mysql
+        command:
+        - mongod
+        - --replSet
+        - rs0
+        ports:
+        - containerPort: 3306
+          name: peer
